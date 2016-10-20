@@ -5,16 +5,15 @@ setInterval(function () {
 }, 1000);
 
 
-var f = function () {
-    var s = 0;
+var arr = [];
 
-    for (var i = 0; i < 100000000; i++) {
-        s += i;
-    }
+var f = function () {
+    arr.push([].fill(1, 1000));
 };
 
-setTimeout(function () {
-    nprof.takeMemorySnapshot('.')
+setInterval(function () {
+
+    nprof.takeMemorySnapshot('./snap')
         .then((info) => {
             console.log('snapshoted to ', info);
         })
@@ -22,28 +21,30 @@ setTimeout(function () {
             console.log(error);
         });
 
-    nprof.cpuProfile('.', 2000)
-        .then((info) => {
-            console.log(info);
-
-            nprof.startCpuProfile();
-
-            f();
-
-            var profile = nprof.stopCpuProfile();
-
-            return nprof.saveCpuProfile(profile, '.');
-        })
-        .then((info) => {
-            console.log(info);
-            process.exit();
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-
-
-
+    // nprof.cpuProfile('.', 2000)
+    //     .then((info) => {
+    //         console.log(info);
+    //
+    //         nprof.startCpuProfile();
+    //
+    //         f();
+    //
+    //         var profile = nprof.stopCpuProfile();
+    //
+    //         return nprof.saveCpuProfile(profile, '.');
+    //     })
+    //     .then((info) => {
+    //         console.log(info);
+    //         process.exit();
+    //     })
+    //     .catch((error) => {
+    //         console.log(error);
+    //     });
     f();
 
-}, 2000);
+}, 1000);
+
+
+setTimeout(function () {
+    process.exit();
+}, 10000);

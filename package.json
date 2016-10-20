@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "files": [
-    "index.js"
+    "index.js",
+    "express"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
