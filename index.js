@@ -34,7 +34,7 @@ var takeMemorySnapshot = function(snapshotPath, options) {
 
         var snapshot = profiler.takeSnapshot(date);
 
-        var filepath = snapshotPath + '/v8.memory.' + date + '.heapsnapshot';
+        var filepath = snapshotPath + '/v8.mem.' + date + '.heapsnapshot';
 
         if (options && options.filepath) {
             filepath = options.filepath;
