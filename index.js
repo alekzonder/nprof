@@ -61,9 +61,22 @@ var stopCpuProfile = function() {
     return profiler.stopProfiling();
 };
 
-var saveCpuProfile = function(profile, filepath) {
+var saveCpuProfile = function(profile, snapshotPath, options) {
 
     return new Promise(function (resolve, reject) {
+
+        var filepath = snapshotPath + '/v8.cpu.' + profile.title;
+
+        if (options && options.timeout) {
+            filepath += '.timeout.' + options.timeout;
+        }
+
+        filepath += '.cpuprofile';
+
+        if (options && options.filepath) {
+            filepath = options.filepath;
+        }
+
         profile.export()
             .pipe(fs.createWriteStream(filepath))
             .on('error', function(error) {
@@ -94,16 +107,16 @@ var cpuProfile = function(snapshotPath, timeout, options) {
 
         startCpuProfile();
 
+        if (!options) {
+            options = {};
+        }
+
+        options.timeout = timeout;
+
         setTimeout(function() {
             var profile = stopCpuProfile();
 
-            var filepath = snapshotPath + '/v8.cpu.' + profile.title + '.timeout.' + timeout + '.cpuprofile';
-
-            if (options && options.filepath) {
-                filepath = options.filepath;
-            }
-
-            saveCpuProfile(profile, filepath)
+            saveCpuProfile(profile, snapshotPath, options)
                 .then(function (header) {
                     resolve(header);
                 })

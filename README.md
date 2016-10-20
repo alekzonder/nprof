@@ -13,17 +13,31 @@ npm i --save nprof
 ```js
 var nprof = require('nprof');
 
-nprof.takeMemorySnapshot('.')
-    .then((info) => {
+nprof.takeMemorySnapshot('/tmp/snapshots')
+    .then((info) => {})
+    .catch((error) => {});
 
-    })
-    .catch(function (error) {
-        console.log(error);
-    });
+nprof.cpuProfile('/tmp/snapshots', 2000)
+    .then((info) => {})
+    .catch((error) => {});
 
 ```
 
 # api
+
+## takeMemorySnapshot(snapshotPath, options) : Promise
+
+- **snapshotPath** - path to directory (nprof generate filenames)
+- **options**
+    - **filepath** - set this option with filepath, if you need your own filename
+
+take memory snapshot and save to snapshotPath
+
+### filename mask
+
+```
+${snapshotPath}/v8.cpu.' + (new Date()).tJSON() + '.cpuprofile'
+```
 
 ## cpuProfile(snapshotPath, timeout, options) : Promise
 
@@ -40,19 +54,24 @@ start cpu profiling, stop after timeout and save to snapshotPath
 ${snapshotPath}/v8.cpu.' + (new Date()).tJSON() + '.timeout.' + timeout + '.cpuprofile'
 ```
 
-## takeMemorySnapshot(snapshotPath, options) : Promise
+# startCpuProfile()
 
+start cpu profiling
+
+# stopCpuProfile() : CpuProfile
+
+stop cpu proflile
+
+# saveCpuProfile(profile, snapshotPath, options)
+
+save profile to file
+
+- **profile** - profile object
 - **snapshotPath** - path to directory (nprof generate filenames)
 - **options**
     - **filepath** - set this option with filepath, if you need your own filename
 
-take memory snapshot and save to snapshotPath
 
-### filename mask
-
-```
-${snapshotPath}/v8.cpu.' + (new Date()).tJSON() + '.cpuprofile'
-```
 
 # LICENSE
 

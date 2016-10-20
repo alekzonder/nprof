@@ -8,7 +8,7 @@ setInterval(function () {
 var f = function () {
     var s = 0;
 
-    for (var i = 0; i < 10000000; i++) {
+    for (var i = 0; i < 100000000; i++) {
         s += i;
     }
 };
@@ -25,12 +25,25 @@ setTimeout(function () {
     nprof.cpuProfile('.', 2000)
         .then((info) => {
             console.log(info);
-            process.exit(0);
+
+            nprof.startCpuProfile();
+
+            f();
+
+            var profile = nprof.stopCpuProfile();
+
+            return nprof.saveCpuProfile(profile, '.');
+        })
+        .then((info) => {
+            console.log(info);
+            process.exit();
         })
         .catch((error) => {
             console.log(error);
         });
 
-        f();
+
+
+    f();
 
 }, 2000);
