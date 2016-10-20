@@ -54,15 +54,15 @@ start cpu profiling, stop after timeout and save to snapshotPath
 ${snapshotPath}/v8.cpu.' + (new Date()).tJSON() + '.timeout.' + timeout + '.cpuprofile'
 ```
 
-# startCpuProfile()
+## startCpuProfile()
 
 start cpu profiling
 
-# stopCpuProfile() : CpuProfile
+## stopCpuProfile() : CpuProfile
 
 stop cpu proflile
 
-# saveCpuProfile(profile, snapshotPath, options)
+## saveCpuProfile(profile, snapshotPath, options) : Promise
 
 save profile to file
 
