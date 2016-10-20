@@ -1,0 +1,28 @@
+{
+  "name": "nprof",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "files": ["index.js"],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alekzonder/nprof.git"
+  },
+  "keywords": [
+    "profiling",
+    "memory",
+    "cpu"
+  ],
+  "author": "alekzonder <alekzonder@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alekzonder/nprof/issues"
+  },
+  "homepage": "https://github.com/alekzonder/nprof#readme",
+  "dependencies": {
+    "v8-profiler": "^5.6.5"
+  }
+}
