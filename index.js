@@ -2,6 +2,30 @@ var fs = require('fs');
 
 var profiler = require('v8-profiler');
 
+var getDate = function () {
+    var dt = new Date();
+
+    var date = [
+        dt.getFullYear(),
+        dt.getMonth(),
+        dt.getDate()
+    ].map(function(v) {
+        return (v < 10) ? '0' + v : String(v);
+    });
+
+    var time = [
+        dt.getHours(),
+        dt.getMinutes(),
+        dt.getSeconds()
+    ].map(function(v) {
+        return (v < 10) ? '0' + v : String(v);
+    });
+
+    var ms = dt.getMilliseconds();
+
+    return date.join('-') + 'T' + time.join(':') + '.' + ms;
+};
+
 var saveMemorySnapshot = function (snapshot, filepath) {
 
     return new Promise(function (resolve, reject) {
@@ -30,7 +54,7 @@ var saveMemorySnapshot = function (snapshot, filepath) {
 var takeMemorySnapshot = function(snapshotPath, options) {
 
     return new Promise(function(resolve, reject) {
-        var date = (new Date()).toJSON();
+        var date = getDate();
 
         var snapshot = profiler.takeSnapshot(date);
 
@@ -53,7 +77,7 @@ var takeMemorySnapshot = function(snapshotPath, options) {
 };
 
 var startCpuProfile = function() {
-    var date = (new Date()).toJSON();
+    var date = getDate();
     profiler.startProfiling(date, true);
 };
 

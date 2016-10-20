@@ -36,7 +36,7 @@ take memory snapshot and save to snapshotPath
 ### filename mask
 
 ```
-${snapshotPath}/v8.cpu.' + (new Date()).tJSON() + '.cpuprofile'
+${snapshotPath}/v8.cpu.2016-09-20T13:56:53.936.cpuprofile'
 ```
 
 ## cpuProfile(snapshotPath, timeout, options) : Promise
@@ -51,7 +51,7 @@ start cpu profiling, stop after timeout and save to snapshotPath
 ### filename mask
 
 ```
-${snapshotPath}/v8.cpu.' + (new Date()).tJSON() + '.timeout.' + timeout + '.cpuprofile'
+${snapshotPath}/v8.cpu.2016-09-20T13:56:53.93.timeout.' + timeout + '.cpuprofile'
 ```
 
 ## startCpuProfile()
