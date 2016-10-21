@@ -16,14 +16,13 @@ var getDate = function () {
     var time = [
         dt.getHours(),
         dt.getMinutes(),
-        dt.getSeconds()
+        dt.getSeconds(),
+        dt.getMilliseconds()
     ].map(function(v) {
         return (v < 10) ? '0' + v : String(v);
     });
 
-    var ms = dt.getMilliseconds();
-
-    return date.join('-') + 'T' + time.join(':') + '.' + ms;
+    return date.join('-') + 'T' + time.join('-');
 };
 
 var saveMemorySnapshot = function (snapshot, filepath) {
