@@ -1,15 +1,22 @@
 var path = require('path');
 var nprof = require(path.join(__dirname, '..', 'index.js'));
+var blocked = require('blocked');
+
+var blockedFor = 0;
+
+blocked(function(ms) {
+    blockedFor = ms | 0;
+});
 
 module.exports = function(logger, app, config) {
 
-    var logInfo = function (message) {
+    var logInfo = function(message) {
         if (logger && typeof logger.info === 'function') {
             logger.info(message);
         }
     };
 
-    var logWarn = function (message) {
+    var logWarn = function(message) {
         if (logger && typeof logger.warn === 'function') {
             logger.warn(message);
         } else {
@@ -17,7 +24,7 @@ module.exports = function(logger, app, config) {
         }
     };
 
-    var logError = function (message) {
+    var logError = function(message) {
         if (logger && typeof logger.error === 'function') {
             logger.error(message);
         } else {
@@ -147,5 +154,30 @@ module.exports = function(logger, app, config) {
             }
         });
 
+    });
+
+    app.get('/_status', function(req, res) {
+        var raw = process.memoryUsage();
+
+        var mem = {};
+
+        if (req.query.scale) {
+
+            var scale = parseInt(req.query.scale);
+
+            for (var key in raw) {
+                mem[key] = raw[key] / scale;
+            }
+
+        } else {
+            mem = raw;
+        }
+
+        res.json({
+            result: {
+                mem: mem,
+                loop: blockedFor
+            }
+        });
     });
 };
