@@ -1,8 +1,9 @@
+var path = require('path');
 var express = require('express');
 
 var app = express();
 
-var expressNprofRegister = require(__dirname + '/../../express/register');
+var expressNprofRegister = require(path.resolve(__dirname + '/../../express/register'));
 
 expressNprofRegister(null, app, {snapshotPath: '/tmp/snapshots'});
 
