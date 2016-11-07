@@ -10,26 +10,24 @@ blocked(function(ms) {
 
 module.exports = function(logger, app, config) {
 
-    var logInfo = function(message) {
-        if (logger && typeof logger.info === 'function') {
-            logger.info(message);
+    var log = function (type, message) {
+        if (logger && typeof logger[type] === 'function') {
+            logger[type](message);
+        } else {
+            console.log(message);
         }
+    };
+
+    var logInfo = function(message) {
+        log('info', message);
     };
 
     var logWarn = function(message) {
-        if (logger && typeof logger.warn === 'function') {
-            logger.warn(message);
-        } else {
-            console.log(message);
-        }
+        log('warn', message);
     };
 
     var logError = function(message) {
-        if (logger && typeof logger.error === 'function') {
-            logger.error(message);
-        } else {
-            console.log(message);
-        }
+        log('error', message);
     };
 
     app.post('/_profile/cpu', function(req, res) {
@@ -37,7 +35,7 @@ module.exports = function(logger, app, config) {
         var timeout = 5000;
 
         if (req.query.timeout && !isNaN(req.query.timeout)) {
-            timeout = parseInt(req.query.timeout);
+            timeout = parseInt(req.query.timeout, 10);
         }
 
         logInfo('[POST /_profile/cpu] starting cpu profile with timeout = ' + timeout + 'ms');
@@ -115,7 +113,7 @@ module.exports = function(logger, app, config) {
 
         if (req.query.scale) {
 
-            var scale = parseInt(req.query.scale);
+            var scale = parseInt(req.query.scale, 10);
 
             for (var key in raw) {
                 mem[key] = raw[key] / scale;
@@ -162,7 +160,7 @@ module.exports = function(logger, app, config) {
         var scale = 1024 * 1024;
 
         if (req.query.scale) {
-            scale = parseInt(req.query.scale);
+            scale = parseInt(req.query.scale, 10);
         }
 
         var mem = {};
