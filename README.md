@@ -126,6 +126,16 @@ exec global.gc() if process started with `--expose-gc` option
 
 return before and after `process.memoryUsage`
 
+## GET /_status
+
+return memory usage and event loop delay
+
+you can add your own status metrics via config.statusFn hook function
+
+see examples/status for more information
+
+
+
 # LICENSE
 
 MIT

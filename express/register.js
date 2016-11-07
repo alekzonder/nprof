@@ -159,25 +159,29 @@ module.exports = function(logger, app, config) {
     app.get('/_status', function(req, res) {
         var raw = process.memoryUsage();
 
-        var mem = {};
+        var scale = 1024 * 1024;
 
         if (req.query.scale) {
+            scale = parseInt(req.query.scale);
+        }
 
-            var scale = parseInt(req.query.scale);
+        var mem = {};
 
-            for (var key in raw) {
-                mem[key] = raw[key] / scale;
-            }
+        for (var key in raw) {
+            mem[key] = raw[key] / scale;
+        }
 
-        } else {
-            mem = raw;
+        var status = {
+            mem: mem,
+            loop: blockedFor
+        };
+
+        if (config && typeof config.statusFn === 'function') {
+            status = config.statusFn(status);
         }
 
         res.json({
-            result: {
-                mem: mem,
-                loop: blockedFor
-            }
+            result: status
         });
     });
 };
