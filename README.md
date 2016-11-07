@@ -1,8 +1,10 @@
 # nprof
 
+small promise interface to [v8-profiler](https://github.com/node-inspector/v8-profiler) functions
+
 [![NPM](https://nodei.co/npm/nprof.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/nprof/)
 
-small promise interface to [v8-profiler](https://github.com/node-inspector/v8-profiler) functions
+[![Code Climate](https://codeclimate.com/github/alekzonder/nprof/badges/gpa.svg)](https://codeclimate.com/github/alekzonder/nprof)
 
 # install
 
