@@ -102,35 +102,35 @@ nprofRegister(logger, app, nprofConfig);
 
 ## REST API
 
-## POST /_profile/cpu?timeout={int}
+## POST /_service/profile/cpu?timeout={int}
 
 - **timeout** - profile timeout, length of profiling in ms, default = 5000
 
 profile CPU, save to `nprofConfig.snapshotPath`
 
-## POST /_profile/cpu/start
+## POST /_service/profile/cpu/start
 
 start cpu profiling until POST /_profile/cpu/stop not executed
 
-## POST /_profile/cpu/stop
+## POST /_service/profile/cpu/stop
 
 stop cpu profiling and save to `nprofConfig.snapshotPath`
 
-## POST /_profile/mem
+## POST /_service/profile/mem
 
 take memory snapshot and save to `nprofConfig.snapshotPath`
 
-## GET /_profile/mem/usage
+## GET /_service/profile/mem/usage
 
 get actual memory usage via `process.memoryUsage`
 
-## POST /_profile/gc/start
+## POST /_service/profile/gc/start
 
 exec global.gc() if process started with `--expose-gc` option
 
 return before and after `process.memoryUsage`
 
-## GET /_status
+## GET /_service/profile/status
 
 return memory usage and event loop delay
 
@@ -143,4 +143,3 @@ see examples/status for more information
 # LICENSE
 
 MIT
-

@@ -30,7 +30,7 @@ module.exports = function(logger, app, config) {
         log('error', message);
     };
 
-    app.post('/_profile/cpu', function(req, res) {
+    app.post('/_service/profile/cpu', function(req, res) {
 
         var timeout = 5000;
 
@@ -38,11 +38,11 @@ module.exports = function(logger, app, config) {
             timeout = parseInt(req.query.timeout, 10);
         }
 
-        logInfo('[POST /_profile/cpu] starting cpu profile with timeout = ' + timeout + 'ms');
+        logInfo('[POST /_service/profile/cpu] starting cpu profile with timeout = ' + timeout + 'ms');
 
         nprof.cpuProfile(config.snapshotPath, timeout)
             .then((info) => {
-                logInfo('[POST /_profile/cpu] profile saved to ' + info.filepath);
+                logInfo('[POST /_service/profile/cpu] profile saved to ' + info.filepath);
                 res.json({
                     result: info
                 });
@@ -55,9 +55,9 @@ module.exports = function(logger, app, config) {
             });
     });
 
-    app.post('/_profile/cpu/start', function(req, res) {
+    app.post('/_service/profile/cpu/start', function(req, res) {
 
-        logInfo('[POST /_profile/cpu/start] starting cpu profile');
+        logInfo('[POST /_service/profile/cpu/start] starting cpu profile');
 
         nprof.startCpuProfile();
         res.json({
@@ -65,15 +65,15 @@ module.exports = function(logger, app, config) {
         });
     });
 
-    app.post('/_profile/cpu/stop', function(req, res) {
+    app.post('/_service/profile/cpu/stop', function(req, res) {
 
-        logInfo('[POST /_profile/cpu/stop] stopping cpu profile');
+        logInfo('[POST /_service/profile/cpu/stop] stopping cpu profile');
 
         var profile = nprof.stopCpuProfile();
 
         nprof.saveCpuProfile(profile, config.snapshotPath)
             .then((info) => {
-                logInfo('[POST /_profile/cpu/stop] profile saved to ' + info.filepath);
+                logInfo('[POST /_service/profile/cpu/stop] profile saved to ' + info.filepath);
                 res.json({
                     result: info
                 });
@@ -87,13 +87,13 @@ module.exports = function(logger, app, config) {
 
     });
 
-    app.post('/_profile/mem', function(req, res) {
+    app.post('/_service/profile/mem', function(req, res) {
 
-        logInfo('[POST /_profile/mem] taking memory snapshot');
+        logInfo('[POST /_service/profile/mem] taking memory snapshot');
 
         nprof.takeMemorySnapshot(config.snapshotPath)
             .then((info) => {
-                logInfo('[POST /_profile/mem] memory snapshot saved to ' + info.filepath);
+                logInfo('[POST /_service/profile/mem] memory snapshot saved to ' + info.filepath);
                 res.json({
                     result: info
                 });
@@ -106,7 +106,7 @@ module.exports = function(logger, app, config) {
             });
     });
 
-    app.get('/_profile/mem/usage', function(req, res) {
+    app.get('/_service/profile/mem/usage', function(req, res) {
         var raw = process.memoryUsage();
 
         var mem = {};
@@ -128,7 +128,7 @@ module.exports = function(logger, app, config) {
         });
     });
 
-    app.post('/_profile/gc/start', function(req, res) {
+    app.post('/_service/profile/gc/start', function(req, res) {
 
         if (!global.gc) {
             logWarn('no global.gc');
@@ -137,7 +137,7 @@ module.exports = function(logger, app, config) {
             });
         }
 
-        logInfo('[/_profile/gc/start] starting gc');
+        logInfo('[/_service/profile/gc/start] starting gc');
 
         var before = process.memoryUsage();
 
@@ -154,7 +154,7 @@ module.exports = function(logger, app, config) {
 
     });
 
-    app.get('/_status', function(req, res) {
+    app.get('/_service/profile/status', function(req, res) {
         var raw = process.memoryUsage();
 
         var scale = 1024 * 1024;
