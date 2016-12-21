@@ -5,6 +5,8 @@ small promise interface to [v8-profiler](https://github.com/node-inspector/v8-pr
 [![NPM](https://nodei.co/npm/nprof.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/nprof/)
 
 [![Code Climate](https://codeclimate.com/github/alekzonder/nprof/badges/gpa.svg)](https://codeclimate.com/github/alekzonder/nprof)
+[![bitHound Code](https://www.bithound.io/github/alekzonder/nprof/badges/code.svg)](https://www.bithound.io/github/alekzonder/nprof)
+[![bitHound Dependencies](https://www.bithound.io/github/alekzonder/nprof/badges/dependencies.svg)](https://www.bithound.io/github/alekzonder/nprof/master/dependencies/npm)
 
 # install
 
