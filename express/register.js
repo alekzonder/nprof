@@ -111,9 +111,46 @@ module.exports = function(logger, app, config) {
 
         var mem = {};
 
+        var scale = null;
+
         if (req.query.scale) {
 
-            var scale = parseInt(req.query.scale, 10);
+            if (isNaN(req.query.scale)) {
+
+                var tmpScale = String(req.query.scale).toLowerCase();
+
+                switch (tmpScale) {
+                    case 'kb':
+                        scale = 1024;
+                        break;
+
+                    case 'mb':
+                        scale = 1024 * 1024;
+                        break;
+
+                    case 'gb':
+                        scale = 1024 * 1024 * 1024;
+                        break;
+
+                    default:
+                        return res
+                            .status(400)
+                            .json({
+                                error: {
+                                    message: 'invalid scale value. should be number or string (kb, mb, gb)'
+                                }
+                            });
+
+                        break;
+                }
+
+            } else {
+                scale = parseInt(req.query.scale, 10);
+            }
+
+        }
+
+        if (scale) {
 
             for (var key in raw) {
                 mem[key] = raw[key] / scale;

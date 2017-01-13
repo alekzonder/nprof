@@ -122,6 +122,8 @@ take memory snapshot and save to `nprofConfig.snapshotPath`
 
 ## GET /_service/profile/mem/usage
 
+scale GET-param can be number or string (kb, mb, gb)
+
 get actual memory usage via `process.memoryUsage`
 
 ## POST /_service/profile/gc/start
